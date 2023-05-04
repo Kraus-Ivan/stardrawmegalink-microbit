@@ -1,11 +1,11 @@
 {
-    "name": "ivan",
+    "name": "změna",
     "description": "",
     "dependencies": {
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "pxt-servo-pwm": "github:TomasKazda/pxt-servo-pwm#432fced65423b6f3880e374b6a1a54aabd539b07"
+        "pxt-servo-pwm": "github:Kraus-Ivan/pxt-servo-pwm#432fced65423b6f3880e374b6a1a54aabd539b07"
     },
     "files": [
         "main.blocks",
