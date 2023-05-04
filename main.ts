@@ -7,8 +7,6 @@ servo1.setMaxPulse(2600);
 
 basic.forever(function () {
 	basic.pause(20);
-    
-    //servo1.setPulse(2500);
 });
 
 
