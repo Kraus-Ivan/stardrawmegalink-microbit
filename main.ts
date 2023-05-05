@@ -1,64 +1,32 @@
-class PWMservo {
-    min: number;
-    max: number;
-    current: number;
-    pin: AnalogPin;
+let servo1 = servoPWM.createServo(AnalogPin.P13);
+let servo2 = servoPWM.createServo(AnalogPin.P15);
 
-    constructor(min: number, max: number, current: number, pin: AnalogPin) {
-        this.min = min;
-        this.max = max;
-        this.current = current;
-        this.pin = pin;
+// změřeno
+servo1.setMinPulse(400);
+servo1.setMaxPulse(2600);
 
-        this.rotate(0);
-    }
+servo2.setMinPulse(400);
+servo2.setMaxPulse(2600);
 
-    public rotate(howmuchmore: number) {
-        // Opravit použití proměnných třídy
-        if (this.current + howmuchmore > this.max) {
-            this.current = this.max;
-        } else if (this.current + howmuchmore < this.min) {
-            this.current = this.min;
-        } else {
-            this.current += howmuchmore;
-        }
 
-        pins.servoSetPulse(this.pin, this.current);
-        console.log(this.current);
-    }
-}
-
-let switched = false;
-
-pins.setPull(DigitalPin.P16, PinPullMode.PullNone);
-pins.analogWritePin(AnalogPin.P16, 0);
-pins.setPull(DigitalPin.P13, PinPullMode.PullNone);
-pins.analogWritePin(AnalogPin.P13, 0);
-let miniservo = new PWMservo(900, 1900, 1400, AnalogPin.P16);
-let servo1 = new PWMservo(400, 2600, 1500, AnalogPin.P13);
+const step = 1;
+let currentPosition = 2000;
+servo1.setPulse(currentPosition);
+servo2.setPulse(currentPosition);
 
 basic.forever(function () {
-    basic.pause(20);
-    if(switched){
-        if (input.buttonIsPressed(Button.A)) {
-            miniservo.rotate(20);
-        }
-        if (input.buttonIsPressed(Button.B)) {
-            miniservo.rotate(-20);
-        }
-    }else{
-        if (input.buttonIsPressed(Button.A)) {
-            servo1.rotate(200);
-        }
-        if (input.buttonIsPressed(Button.B)) {
-            servo1.rotate(-200);
-        }
+    basic.pause(2);
+
+    if (input.buttonIsPressed(Button.A)){
+        currentPosition += step; // Zvyšuje hodnotu pulzu o krok
+        servo1.setPulse(currentPosition);
+        servo2.setPulse(currentPosition + 150)
     }
 
+    if (input.buttonIsPressed(Button.B)) {
+        currentPosition -= step; // Sníží hodnotu pulzu o krok
+        servo1.setPulse(currentPosition);
+        servo2.setPulse(currentPosition - 150);
+    }
 });
 
-input.onLogoEvent(TouchButtonEvent.Pressed, () => {
-
-    switched = !switched;
-
-});
