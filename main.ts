@@ -1,32 +1,26 @@
+/*
 let servo1 = servoPWM.createServo(AnalogPin.P13);
 let servo2 = servoPWM.createServo(AnalogPin.P15);
+*/
+/*
+servo1.setDelay(servoPWM.Speed.SlowestUltra);
+servo2.setDelay(servoPWM.Speed.Immediately);
+*/
 
-// změřeno
-servo1.setMinPulse(400);
-servo1.setMaxPulse(2600);
+PCAmotor.GeekServo(PCAmotor.Servos.S1, 1500);
+basic.pause(1000);
+PCAmotor.GeekServospeed(PCAmotor.Servos.S1, 1500, 2400, 1)
 
-servo2.setMinPulse(400);
-servo2.setMaxPulse(2600);
+/*
+servo1.setPulse(1500);
+servo2.setPulse(1500);
+basic.pause(1000);
+servo1.setPulse(2500);
+basic.pause(2000);
+servo1.setPulse(500);
 
-
-const step = 1;
-let currentPosition = 2000;
-servo1.setPulse(currentPosition);
-servo2.setPulse(currentPosition);
-
-basic.forever(function () {
-    basic.pause(2);
-
-    if (input.buttonIsPressed(Button.A)){
-        currentPosition += step; // Zvyšuje hodnotu pulzu o krok
-        servo1.setPulse(currentPosition);
-        servo2.setPulse(currentPosition + 150)
-    }
-
-    if (input.buttonIsPressed(Button.B)) {
-        currentPosition -= step; // Sníží hodnotu pulzu o krok
-        servo1.setPulse(currentPosition);
-        servo2.setPulse(currentPosition - 150);
-    }
-});
+for (let i = 1; i < 1000; i ++) {
+    servo1.setPulseBy(5);
+    basic.pause(1);
+}*/
 

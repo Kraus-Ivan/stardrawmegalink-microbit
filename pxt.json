@@ -1,11 +1,12 @@
 {
-    "name": "ono to funguje !!!",
+    "name": "achjo",
     "description": "",
     "dependencies": {
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "pxt-servo-pwm": "github:Kraus-Ivan/pxt-servo-pwm#432fced65423b6f3880e374b6a1a54aabd539b07"
+        "pxt-servo-pwm": "github:Kraus-Ivan/pxt-servo-pwm#432fced65423b6f3880e374b6a1a54aabd539b07",
+        "pxt-magicbit-pca9685": "github:TomasKazda/pxt-magicbit-pca9685#31053e8d1380ca67c69e729c607b8c68fd4357a5"
     },
     "files": [
         "main.blocks",
