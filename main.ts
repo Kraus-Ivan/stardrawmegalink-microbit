@@ -1,26 +1,61 @@
-/*
-let servo1 = servoPWM.createServo(AnalogPin.P13);
-let servo2 = servoPWM.createServo(AnalogPin.P15);
-*/
-/*
-servo1.setDelay(servoPWM.Speed.SlowestUltra);
-servo2.setDelay(servoPWM.Speed.Immediately);
-*/
+class SmoothServo {
+    private pin: AnalogPin;
 
-PCAmotor.GeekServo(PCAmotor.Servos.S1, 1500);
-basic.pause(1000);
-PCAmotor.GeekServospeed(PCAmotor.Servos.S1, 1500, 2400, 1)
+    private target: number;
+    private current: number;
+    private zasobnik: number[] = [];
 
-/*
-servo1.setPulse(1500);
-servo2.setPulse(1500);
-basic.pause(1000);
-servo1.setPulse(2500);
-basic.pause(2000);
-servo1.setPulse(500);
+    private min: number = 400;
+    private max: number = 2600;
 
-for (let i = 1; i < 1000; i ++) {
-    servo1.setPulseBy(5);
-    basic.pause(1);
-}*/
+    constructor(pin: AnalogPin) {
+        this.pin = pin;
+        this.target = 0;
+        this.current = 1550;
+        pins.servoSetPulse(this.pin, this.current);
+    }
 
+    moveTo(position: number) {
+        console.log(this.current);
+        this.target = position;
+        let step = 20;
+        console.log(step);
+        for (let i = 0; this.current + step * i < this.target; i++) {
+
+            this.zasobnik.push(this.current + (step * i));
+
+
+        } console.log(this.zasobnik.join());
+        
+    }
+
+    update() {
+        if(this.zasobnik !== undefined && this.zasobnik.length > 0){
+            let e = this.zasobnik.shift()
+            console.log(e);
+            pins.servoSetPulse(this.pin, e);
+            this.current = e;
+        }else{
+            pins.servoSetPulse(this.pin, this.current);
+        }
+    }
+}
+
+let servo = new SmoothServo(AnalogPin.P1);
+
+input.onButtonPressed(Button.A, () =>{
+
+    servo.moveTo(2002);
+
+});
+
+basic.forever(() => {
+    basic.pause(20);
+    if(servo !== null && servo !== undefined){
+        servo.update();
+    }
+
+});
+
+let miniservo = servoPWM.createServo(AnalogPin.P0);
+miniservo.setPulse(500);
